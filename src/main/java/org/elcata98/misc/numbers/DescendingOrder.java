@@ -17,7 +17,7 @@ class DescendingOrder {
         String numString = Integer.toString(num);
 
         return
-                Integer.valueOf(
+                Integer.parseInt(
                         IntStream
                                 .range(0, numString.length())
                                 .mapToObj(i -> String.valueOf(numString.charAt(i)))

@@ -1,10 +1,8 @@
 package org.elcata98.misc.fibo;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 public class Fibo {
 
@@ -19,7 +17,7 @@ public class Fibo {
 
     public static BigInteger fibIt(final BigInteger x) {
 
-        if(BigInteger.ZERO.equals(x) || (BigInteger.ONE.equals(x))){
+        if (BigInteger.ZERO.equals(x) || (BigInteger.ONE.equals(x))) {
             return x;
         }
 
@@ -28,7 +26,7 @@ public class Fibo {
 
         BigInteger i = BigInteger.TWO;
 
-        while(i.compareTo(x) < 0) {
+        while (i.compareTo(x) < 0) {
             BigInteger temp = fib;
             fib = fib.add(prevFib);
             prevFib = temp;
@@ -40,31 +38,32 @@ public class Fibo {
     /**
      * Recursive implementation
      * Given positive integer returns the Fibonacci number of that integer
+     *
      * @param x
      * @return Fibonacci number of x
      */
-    public static float fibRec(final float x){
+    public static float fibRec(final float x) {
 
         float a;
         float b;
 
-        if (x<=1) {
+        if (x <= 1) {
 
             return x;
         } else {
 
-            if(CALCULATED.get(x-1) != null) {
-                a = CALCULATED.get(x-1);
+            if (CALCULATED.get(x - 1) != null) {
+                a = CALCULATED.get(x - 1);
             } else {
-                a = fibRec(x-1);
-                CALCULATED.put(x-1,a);
+                a = fibRec(x - 1);
+                CALCULATED.put(x - 1, a);
             }
 
-            if(CALCULATED.get(x-2) != null) {
-                b = CALCULATED.get(x-2);
+            if (CALCULATED.get(x - 2) != null) {
+                b = CALCULATED.get(x - 2);
             } else {
-                b = fibRec(x-2);
-                CALCULATED.put(x-2, b);
+                b = fibRec(x - 2);
+                CALCULATED.put(x - 2, b);
             }
             return a + b;
         }

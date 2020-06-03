@@ -7,14 +7,14 @@ public class BiValue {
 
     public static void main(final String[] args) {
 
-    /*
-    A[0] = 5
-   A[1] = 4
-   A[2] = 4
-   A[3] = 5
-   A[4] = 0
-   A[5] = 12
-     */
+        /*
+           A[0] = 5
+           A[1] = 4
+           A[2] = 4
+           A[3] = 5
+           A[4] = 0
+           A[5] = 12
+         */
         int[] A = {7, 8, 9, 7, 4, 4, 4, 5, 0, 12};
 
         int p = 0;

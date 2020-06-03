@@ -1,22 +1,13 @@
 package org.elcata98.misc.numbers;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
 public class NumbersTransformer {
 
-
-    private static final List<List<Character>> MAPPINGS;
-
-    static {
-
-//        we store possible symbols for the nth reverse position of the arabic number (0 the last one, 1 one position the left and so on)
-
-        MAPPINGS = List.of(Arrays.asList('I', 'V'), Arrays.asList('X', 'L'), Arrays.asList('C', 'D'), Collections.singletonList('M'));
-    }
+    private static final List<List<Character>> MAPPINGS =
+            List.of(List.of('I', 'V'), List.of('X', 'L'), List.of('C', 'D'), Collections.unmodifiableList(Collections.singletonList('M')));
 
     public String adaptToRoman(final int arabic) {
 
@@ -31,7 +22,7 @@ public class NumbersTransformer {
         IntStream
                 .range(0, number.length())
                 .forEachOrdered(
-                        index -> processDigit(Integer.valueOf(String.valueOf(number.charAt(index))), number.length() - index - 1, result)
+                        index -> processDigit(Integer.parseInt(String.valueOf(number.charAt(index))), number.length() - index - 1, result)
                 );
 
         return result.toString();

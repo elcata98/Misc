@@ -1,6 +1,5 @@
 package org.elcata98.misc.numbers;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -8,16 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 class NumbersTransformerTest {
 
-    private NumbersTransformer numbersTransformer;
-
-    @BeforeEach
-    void setUp(){
-
-        numbersTransformer = new NumbersTransformer();
-    }
+    private NumbersTransformer numbersTransformer = new NumbersTransformer();
 
     @Test
-    void testAdaptToRoman(){
+    void testAdaptToRoman() {
 
         assertNull(numbersTransformer.adaptToRoman(0));
         assertNull(numbersTransformer.adaptToRoman(5000));

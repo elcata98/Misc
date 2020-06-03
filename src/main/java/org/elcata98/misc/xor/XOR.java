@@ -5,7 +5,8 @@ import java.util.stream.IntStream;
 
 public class XOR {
 
-    /** Starting at 0
+    /*
+        Starting at 0
         1 - 1 - M%4: 1
         11 - 3 - M%4: 2
         00 - 0 - M%4: 3
@@ -30,9 +31,10 @@ public class XOR {
                             2 -> M+1
                             3 -> 0
                         }
-     **/
-    /** Starting at 1
+     */
 
+    /*
+        Starting at 1
         11 - 3 - M%4: 2
         00 - 0 - M%4: 3
         100 - 4 - M%4: 0
@@ -55,6 +57,7 @@ public class XOR {
                             3 -> 0
                         }
      */
+
     public static void main(String[] args) {
 	// write your code here
         int M = 16;
@@ -114,17 +117,13 @@ public class XOR {
         if (diff < 0) {
 
             StringBuilder b = new StringBuilder();
-            for (int i = 0; i > diff; --i) {
-                b.append("0");
-            }
+            b.append("0".repeat(-diff));
             bytesK = b.append(bytesK).toString();
 
         } else if (diff > 0) {
 
             StringBuilder b = new StringBuilder();
-            for (int i = 0; i < diff; ++i) {
-                b.append("0");
-            }
+            b.append("0".repeat(diff));
             bytesL = b.append(bytesL).toString();
         }
 
@@ -171,16 +170,12 @@ public class XOR {
 
         if(diff < 0){
             StringBuilder b = new StringBuilder();
-            for(int i=0; i>diff; --i){
-                b.append("0");
-            }
+            b.append("0".repeat(-diff));
             bytesK = b.append(bytesK).toString();
 
         }else if(diff > 0){
             StringBuilder b = new StringBuilder();
-            for(int i=0; i<diff; ++i){
-                b.append("0");
-            }
+            b.append("0".repeat(diff));
             bytesL = b.append(bytesL).toString();
         }
 
@@ -189,7 +184,6 @@ public class XOR {
         for (int i= 0; i< bytesK.length(); ++i){
             bytesC.append(bytesK.charAt(i)^bytesL.charAt(i));
         }
-//        System.out.println(bytesC.toString() + " - "+ Integer.parseInt(bytesC.toString(),2));
         return Integer.parseInt(bytesC.toString(),2);
     }
 }
