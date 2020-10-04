@@ -1,14 +1,24 @@
 package org.elcata98.misc.numbers;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
 public class NumbersTransformer {
 
-    private static final List<List<Character>> MAPPINGS =
+    private static final Pattern ROMAN_PATTERN = Pattern.compile("^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$");
+
+    private static final List<List<Character>> ROMAN_MAPPINGS =
             List.of(List.of('I', 'V'), List.of('X', 'L'), List.of('C', 'D'), Collections.singletonList('M'));
+
+    private static final Map<String, Integer> ARABIC_MAPPINGS =
+            Map.of("I", 1, "V", 5, "X", 10, "L", 50, "C", 100, "D", 500, "M", 1000);
+
 
     public String adaptToRoman(final int arabic) {
 
@@ -29,9 +39,55 @@ public class NumbersTransformer {
         return result.toString();
     }
 
+    public Integer adaptToArabic(String roman) {
+
+        Integer arabic = null;
+
+        if (StringUtils.isNotBlank(roman) && ROMAN_PATTERN.matcher(roman).matches()) {
+
+            arabic = 0;
+
+            if (roman.contains("IV")) {
+                roman = roman.replace("IV", StringUtils.EMPTY);
+                arabic += 4;
+            }
+
+            if (roman.contains("IX")) {
+                roman = roman.replace("IX", StringUtils.EMPTY);
+                arabic += 9;
+            }
+
+            if (roman.contains("XL")) {
+                roman = roman.replace("XL", StringUtils.EMPTY);
+                arabic += 40;
+            }
+
+            if (roman.contains("XC")) {
+                roman = roman.replace("XC", StringUtils.EMPTY);
+                arabic += 90;
+            }
+
+            if (roman.contains("CD")) {
+                roman = roman.replace("CD", StringUtils.EMPTY);
+                arabic += 400;
+            }
+
+            if (roman.contains("CM")) {
+                roman = roman.replace("CM", StringUtils.EMPTY);
+                arabic += 900;
+            }
+
+            for (int i = 0; i < roman.length(); ++i) {
+                arabic += ARABIC_MAPPINGS.get(String.valueOf(roman.charAt(i)));
+            }
+        }
+
+        return arabic;
+    }
+
     private void processDigit(final int digit, final int position, final StringBuilder result) {
 
-        List<Character> characters = MAPPINGS.get(position);
+        List<Character> characters = ROMAN_MAPPINGS.get(position);
 
         Character char0 = characters.get(0);
         Character char1 = characters.size() > 1 ? characters.get(1) : null;
@@ -64,73 +120,8 @@ public class NumbersTransformer {
                 Optional.ofNullable(char1).ifPresent(
                         character -> {
                             result.append(char0);
-                            result.append(MAPPINGS.get(position + 1).get(0));
+                            result.append(ROMAN_MAPPINGS.get(position + 1).get(0));
                         });
-                break;
-        }
-    }
-
-    private void processDigit_OLD(final int digit, final int position, final StringBuilder result) {
-
-        List<Character> characters = MAPPINGS.get(position);
-
-        switch (digit) {
-            case 0:
-                //need to jump to next digit
-                break;
-            case 1:
-                result.append(characters.get(0));
-                break;
-            case 2:
-                result.append(characters.get(0));
-                result.append(characters.get(0));
-                break;
-            case 3:
-                result.append(characters.get(0));
-                result.append(characters.get(0));
-                result.append(characters.get(0));
-                break;
-            case 4:
-                result.append(characters.get(0));
-                if (characters.size() > 1) {
-                    result.append(characters.get(1));
-                } else {
-                    result.append(characters.get(0));
-                    result.append(characters.get(0));
-                    result.append(characters.get(0));
-                }
-                break;
-            case 5:
-                if (characters.size() > 1) {
-                    result.append(characters.get(1));
-                }
-                break;
-            case 6:
-                if (characters.size() > 1) {
-                    result.append(characters.get(1));
-                    result.append(characters.get(0));
-                }
-                break;
-            case 7:
-                if (characters.size() > 1) {
-                    result.append(characters.get(1));
-                    result.append(characters.get(0));
-                    result.append(characters.get(0));
-                }
-                break;
-            case 8:
-                if (characters.size() > 1) {
-                    result.append(characters.get(1));
-                    result.append(characters.get(0));
-                    result.append(characters.get(0));
-                    result.append(characters.get(0));
-                }
-                break;
-            case 9:
-                if (characters.size() > 1) {
-                    result.append(characters.get(0));
-                    result.append(MAPPINGS.get(position + 1).get(0));
-                }
                 break;
         }
     }
